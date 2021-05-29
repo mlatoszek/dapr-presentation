@@ -1,0 +1,7 @@
+//Execute fight on Subscriber
+
+POST http://localhost:7010/fight
+Content-Type: application/json
+
+
+###

@@ -1,0 +1,23 @@
+# tye application configuration file
+# read all about it at https://github.com/dotnet/tye
+#
+# when you've given us a try, we'd love to know what you think:
+#    https://aka.ms/AA7q20u
+#
+name: pub-sub
+extensions:
+- name: dapr
+  components-path: "./components/"
+services:
+- name: publisher
+  project: Publisher/Publisher.csproj
+  bindings:
+  - port: 7000
+- name: Subcriber
+  project: Subcriber/Subcriber.csproj
+  bindings:
+  - port: 7001
+- name: redis
+  image: redis
+  bindings:
+    - port: 6379
