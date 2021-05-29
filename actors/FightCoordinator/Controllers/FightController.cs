@@ -8,6 +8,7 @@ using Contracts;
 using Dapr;
 using Dapr.Actors;
 using Dapr.Actors.Client;
+using System.Threading;
 
 namespace FightCoordinator.Controllers
 {
@@ -24,9 +25,10 @@ namespace FightCoordinator.Controllers
             var botActor = ActorProxy.Create<ICsharpActor>(actorId, "CsharpActor");
             await botActor.InitializeAsync();
             await botActor.StartFightAsync("Fight1");
-            await botActor.NextMoveAsync(new NextMoveRequest());        
-            await botActor.NextMoveAsync(new NextMoveRequest());        
-            await botActor.NextMoveAsync(new NextMoveRequest());        
+            await botActor.NextMoveAsync(new NextMoveRequest(1));        
+            await botActor.NextMoveAsync(new NextMoveRequest(2));        
+            Thread.Sleep(15 * 1000);
+            await botActor.NextMoveAsync(new NextMoveRequest(3));        
             await botActor.EndFightAsync();
         }
     }

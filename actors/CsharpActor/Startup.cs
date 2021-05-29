@@ -22,8 +22,8 @@ namespace CsharpActor
                 // Register actor types and configure actor settings
                 options.Actors.RegisterActor<CsharpActor>();
                 
-                options.ActorIdleTimeout = TimeSpan.FromMinutes(10);
-                options.ActorScanInterval = TimeSpan.FromSeconds(20);
+                options.ActorIdleTimeout = TimeSpan.FromSeconds(10);
+                options.ActorScanInterval = TimeSpan.FromSeconds(5);
                 options.DrainOngoingCallTimeout = TimeSpan.FromSeconds(60);
                 options.DrainRebalancedActors = true;
             });

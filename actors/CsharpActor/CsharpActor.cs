@@ -27,13 +27,15 @@ namespace CsharpActor
         {
             await base.OnActivateAsync();
             logger.LogInformation("Actor {id} activated", Id);
+
+            var stateResult = await StateManager.TryGetStateAsync<ActorState>(StateName);
+            if (stateResult.HasValue) state = stateResult.Value;
         }
 
         protected override async Task OnDeactivateAsync()
         {
-            logger.LogInformation("Actor {id} deactivating", Id);
-            await EndFightAsync();
             await base.OnDeactivateAsync();
+            logger.LogInformation("Actor {id} deactivating", Id);            
         }
 
         public async Task InitializeAsync()
@@ -62,6 +64,7 @@ namespace CsharpActor
             if (state != ActorState.Fighting) {
                 throw new InvalidOperationException($"Actor is in invalid state. State = {state}");
             }
+            logger.LogInformation("Executing move {0}", request.MoveNumber);
             return Task.FromResult(new NextMoveResponse());
         }
 
