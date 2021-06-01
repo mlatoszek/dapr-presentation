@@ -1,0 +1,18 @@
+# tye application configuration file
+# read all about it at https://github.com/dotnet/tye
+#
+# when you've given us a try, we'd love to know what you think:
+#    https://aka.ms/AA7q20u
+#
+name: pub-sub
+extensions:
+- name: dapr
+services:
+- name: web
+  project: Web/Web.csproj
+  bindings:
+  - port: 7020
+- name: fight-coordinator
+  project: FightCoordinator/FightCoordinator.csproj
+  bindings:
+  - port: 7021

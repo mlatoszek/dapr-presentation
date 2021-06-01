@@ -1,0 +1,6 @@
+//Execute fight on Subscriber
+
+POST http://localhost:7021/fight
+Content-Type: application/json
+
+{ "BotName": "Bot 1", "Place": 1 }
