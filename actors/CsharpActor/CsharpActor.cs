@@ -11,7 +11,7 @@ using Contracts;
 namespace CsharpActor
 {
     [Actor(TypeName = "CsharpActor")]
-    class CsharpActor : Actor, ICsharpActor
+    class CsharpActor : Actor, IBotActor
     {    
         private const string StateName = "state";
         private readonly ILogger<CsharpActor> logger;
@@ -26,7 +26,7 @@ namespace CsharpActor
         protected override async Task OnActivateAsync()
         {
             await base.OnActivateAsync();
-            logger.LogInformation("Actor {id} activated", Id);
+            logger.LogInformation("[{0}] Activating", Id);
 
             var stateResult = await StateManager.TryGetStateAsync<ActorState>(StateName);
             if (stateResult.HasValue) state = stateResult.Value;
@@ -35,12 +35,12 @@ namespace CsharpActor
         protected override async Task OnDeactivateAsync()
         {
             await base.OnDeactivateAsync();
-            logger.LogInformation("Actor {id} deactivating", Id);            
+            logger.LogInformation("[{0}] Deactivating", Id);            
         }
 
         public async Task InitializeAsync()
         {
-            logger.LogInformation("Initializing bot {id}", Id);
+            logger.LogInformation("[{0}] Initializing", Id);
             
             if (state != ActorState.NotInitialized) {
                 throw new InvalidOperationException($"Actor is already been initialized. State = {state}");
@@ -51,7 +51,7 @@ namespace CsharpActor
 
         public async Task StartFightAsync(string id)
         {        
-            logger.LogInformation("Starting fight");
+            logger.LogInformation("[{0}] Starting fight", Id);
             if (state != ActorState.Ready) {
                 throw new InvalidOperationException($"Actor cannot start fight as it's in invalid state. State = {state}");
             }
@@ -64,13 +64,13 @@ namespace CsharpActor
             if (state != ActorState.Fighting) {
                 throw new InvalidOperationException($"Actor is in invalid state. State = {state}");
             }
-            logger.LogInformation("Executing move {0}", request.MoveNumber);
+            logger.LogInformation("[{0}] Executing move {1}", Id, request.MoveNumber);
             return Task.FromResult(new NextMoveResponse());
         }
 
         public async Task EndFightAsync()
         {        
-            logger.LogInformation("Ending fight");
+            logger.LogInformation("[{0}] Ending fight", Id);
             state = ActorState.Ready;
             await SaveState();   
         }

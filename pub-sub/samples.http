@@ -3,7 +3,7 @@
 POST http://localhost:7001/subscribe/fight
 Content-Type: application/json
 
-{ "BotName": "Name", "BotCode": "Bot code" }
+{ "BotName": "Call directly", "BotCode": "Bot code" }
 
 ###
 

@@ -21,15 +21,30 @@ namespace FightCoordinator.Controllers
         [HttpPost]
         public async Task Fight()
         {
-            var actorId = new ActorId("actor1");
-            var botActor = ActorProxy.Create<ICsharpActor>(actorId, "CsharpActor");
-            await botActor.InitializeAsync();
-            await botActor.StartFightAsync("Fight1");
-            await botActor.NextMoveAsync(new NextMoveRequest(1));        
-            await botActor.NextMoveAsync(new NextMoveRequest(2));        
+            var actor1Id = new ActorId("actor1");
+            var actor2Id = new ActorId("actor2");
+            var bot1Actor = ActorProxy.Create<IBotActor>(actor1Id, "CsharpActor");
+            var bot2Actor = ActorProxy.Create<IBotActor>(actor2Id, "CsharpActor");
+
+            await bot1Actor.InitializeAsync();
+            await bot2Actor.InitializeAsync();
+
             Thread.Sleep(15 * 1000);
-            await botActor.NextMoveAsync(new NextMoveRequest(3));        
-            await botActor.EndFightAsync();
+
+            await bot1Actor.StartFightAsync("Fight1");
+            await bot2Actor.StartFightAsync("Fight1");
+
+
+            await bot1Actor.NextMoveAsync(new NextMoveRequest(1));    
+            await bot2Actor.NextMoveAsync(new NextMoveRequest(2));
+
+            await bot1Actor.NextMoveAsync(new NextMoveRequest(3));                    
+            await bot2Actor.NextMoveAsync(new NextMoveRequest(4));        
+
+            
+
+            await bot1Actor.EndFightAsync();
+            await bot2Actor.EndFightAsync();
         }
     }
 }

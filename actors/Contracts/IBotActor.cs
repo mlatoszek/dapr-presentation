@@ -3,7 +3,7 @@ using Dapr.Actors;
 
 namespace Contracts
 {
-    public interface ICsharpActor : IActor
+    public interface IBotActor : IActor
     {
         Task InitializeAsync();              
         Task StartFightAsync(string id);
